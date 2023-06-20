@@ -1,5 +1,9 @@
 # Chat application backend
 
+### Environment variables
+
+- Add environment variables from .env.example to .env
+
 ### Install project dependencies
 
 - npm install
