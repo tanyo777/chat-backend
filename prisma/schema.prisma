@@ -7,13 +7,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
-  firstName String
-  lastName  String
-  password  String
-  createdAt DateTime @default(now())
+model Users {
+  id               String             @id @default(cuid())
+  email            String             @unique
+  firstName        String
+  lastName         String
+  password         String
+  createdAt        DateTime           @default(now())
+  NamespacesToUser NamespacesToUser[]
 
   @@map("users")
+}
+
+model NamespacesToUser {
+  id String @id @default(cuid())
+
+  userId      String @map(name: "user_id")
+  namespaceId String @map(name: "namespace_id")
+
+  user       Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  namespaces Namespaces @relation(fields: [namespaceId], references: [id], onDelete: Cascade)
+
+  @@map("namespaces_to_user")
+}
+
+model Namespaces {
+  id               String             @id @default(cuid())
+  name             String             @unique
+  NamespacesToUser NamespacesToUser[]
+
+  @@map("namespaces")
 }

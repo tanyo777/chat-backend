@@ -20,7 +20,7 @@ export const create = async ({
 }: IRegisterUserPayload) => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const alreadyExistingUser = await prisma.user.findFirst({
+  const alreadyExistingUser = await prisma.users.findFirst({
     where: {
       email,
     },
@@ -30,7 +30,7 @@ export const create = async ({
     throw Error("Email already exists!");
   }
 
-  await prisma.user.create({
+  await prisma.users.create({
     data: {
       firstName,
       lastName,
@@ -44,7 +44,7 @@ export const loginHandler = async (
   res: Response,
   { email, password }: ILoginPayload
 ) => {
-  const user = await prisma.user.findFirst({
+  const user = await prisma.users.findFirst({
     where: {
       email,
     },
@@ -82,7 +82,7 @@ export const refreshTokenHandler = async (
     throw new APIError(StatusCodes.BAD_REQUEST, "Invalid refresh token");
   }
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.users.findFirst({
     where: {
       id: payload.userId,
     },

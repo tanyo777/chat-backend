@@ -9,5 +9,5 @@ export interface ITokens {
 }
 
 export interface ITokenPayload {
-  userId: number;
+  userId: string;
 }
