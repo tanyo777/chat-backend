@@ -1,5 +1,5 @@
 export enum TokenExpiration {
-  Access = 5 * 60, // 5 minutes
+  Access = 24 * 60 * 60, // 24hours
   Refresh = 7 * 24 * 60 * 60, // 7 days
 }
 
