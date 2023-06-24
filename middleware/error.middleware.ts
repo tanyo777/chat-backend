@@ -27,4 +27,5 @@ export const errorHandler = (
   };
 
   res.status(defaultError.statusCode).json({ msg: [defaultError.msg] });
+  next();
 };

@@ -26,6 +26,8 @@ export const registrationSchema = zod
   });
 
 export const loginSchema = zod.object({
-  email: zod.string().email({ message: "Email is not valid" }),
-  password: zod.string(),
+  email: zod
+    .string({ required_error: "Email is required" })
+    .email({ message: "Email is not valid" }),
+  password: zod.string({ required_error: "Password is required" }),
 });

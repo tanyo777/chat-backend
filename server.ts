@@ -11,7 +11,7 @@ const main = async () => {
     const httpServer = http.createServer(app);
     initializeWSServer(httpServer);
     httpServer.listen(envVars.port, () => {
-      console.log(`Server runnign on port ${envVars.port}`);
+      console.log(`HTTP/WS Server running on port ${envVars.port}`);
     });
   } catch (err) {
     console.log(err);

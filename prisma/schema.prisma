@@ -38,3 +38,12 @@ model Namespaces {
 
   @@map("namespaces")
 }
+
+model Messages {
+  id        String   @id @default(cuid())
+  name      String
+  message   String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
+  @@map("messages")
+}

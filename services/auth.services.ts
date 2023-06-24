@@ -11,6 +11,7 @@ import {
   validateRefreshToken,
 } from "../utils/tokens.util";
 import APIError from "../utils/apiError.util";
+import { loginSchema } from "../utils/validation.util";
 
 export const create = async ({
   firstName,
@@ -40,13 +41,12 @@ export const create = async ({
   });
 };
 
-export const loginHandler = async (
-  res: Response,
-  { email, password }: ILoginPayload
-) => {
+export const loginHandler = async (res: Response, payload: ILoginPayload) => {
+  loginSchema.parse(payload);
+
   const user = await prisma.users.findFirst({
     where: {
-      email,
+      email: payload.email,
     },
   });
 
@@ -54,7 +54,7 @@ export const loginHandler = async (
     throw Error("Invalid credentials");
   }
 
-  const correctPassword = await bcrypt.compare(password, user.password);
+  const correctPassword = await bcrypt.compare(payload.password, user.password);
 
   if (!correctPassword) {
     throw Error("Invalid credentials");
@@ -69,7 +69,7 @@ export const loginHandler = async (
 
   const { firstName, lastName, id } = user;
 
-  return { email, firstName, lastName, id };
+  return { email: payload.email, firstName, lastName, id };
 };
 
 export const refreshTokenHandler = async (
